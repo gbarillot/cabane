@@ -1,12 +1,15 @@
 require 'spec_helper'
+include Warden::Test::Helpers
 
 describe 'Ads', :js => true do
 
+  before(:all) do
+    @conf = FactoryGirl.create :conf
+    @user = FactoryGirl.create :user, :role => 'user'
+  end
+
   before (:each) do
-    visit '/users/sign_in'
-    fill_in('user_email', :with => 'testing1@example.com')
-    fill_in('user_password', :with => 'testing')
-    click_button I18n.t('devise.common.sign_in')
+    login_as @user, :scope => :user    
   end
 
   after(:all) do
@@ -16,7 +19,7 @@ describe 'Ads', :js => true do
   it "visit ads home page" do
     visit '/ads'
 
-    page.should have_content(I18n.t('create_ad'))
+    page.should have_content I18n.t('create_ad')
   end
 
 end

@@ -5,35 +5,14 @@ module ApplicationHelper
     Time.now.hour > 18 ? t(:good_evening) : t(:good_morning)
   end
 
-  # Top main menu tabs, remove/add you own here
-  def tabs
-    tabs = [
-      {:name   => 'dashboard',
-       :icon   => 'icon-home icon-white',
-       :url    => 'blog'
-      },
-      {:name   => 'members',
-       :icon   => 'icon-search icon-white',
-       :url    => 'members'
-      },
-      {:name   => 'events',
-       :icon   => 'icon-time icon-white',
-       :url    => 'events'
-      },
-      {:name   => 'lets_share',
-       :icon   => 'icon-random icon-white',
-       :url    => 'ads'
-      },
-      {:name   => 'medias.title',
-       :icon   => 'icon-book icon-white',
-       :url    => 'medias'
-      }
-    ]
-  end
-
   # Which role are you playing ?
   def is_admin
     (current_user.role == 'admin' && !current_user.view_as_user) ? true : false
+  end
+
+  # Just a handy shortcut
+  def current_member
+    current_user.member if current_user
   end
 
   # Display socials networks links and icon if profile exists
@@ -85,15 +64,6 @@ module ApplicationHelper
     end
   end
 
-  # Show member avatar or default avatar
-  def avatar(member, size)
-    if member.avatar
-      image_tag member.avatar.thumb(size).url, :alt=>"#{member.first_name} #{member.last_name}"
-    else
-      image_tag $conf.default_avatar.thumb(size).url, :alt=>t('default_avatar')
-    end
-  end
-
   # Format gauge width for surveys
   def gauge(percentage)
     (((percentage.to_f/100.to_f)*490.to_f)+30.to_f).to_i
@@ -133,6 +103,8 @@ module ApplicationHelper
     months = I18n.t('date.abbr_month_names')[1..-2]
     months.to_json
   end
+
+  # Testing stuff
   extend self
 end
 

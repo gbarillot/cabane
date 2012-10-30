@@ -1,7 +1,5 @@
 class MembersController < ApplicationController
 
-  before_filter :is_logged, :load_conf
-
   # GET /members
   # List all members                                    HTML
   # --------------------------------------------------------
@@ -22,7 +20,7 @@ class MembersController < ApplicationController
   # Show member's profile                               HTML
   # --------------------------------------------------------
   def show
-    @member = Member.find(params[:id], :include=>:profiles)
+    @member = Member.active.find(params[:id], :include=>:profiles)
 
     @user_profiles = @member.profiles.map{|p|{p.network_id=>p.url}}
     @pro_networks = Network.with_urls(@user_profiles, :pro)
@@ -40,7 +38,7 @@ class MembersController < ApplicationController
   # Create a new user                               REDIRECT
   # --------------------------------------------------------
   def create
-
+    
     new_user = User.create(params[:user])
 
     if new_user.id
@@ -62,7 +60,6 @@ class MembersController < ApplicationController
   # Update a member                                 REDIRECT
   # --------------------------------------------------------
   def update
-    raise params[:view_as_user].inspect
     params[:member][:logo] = nil if params[:logo_reset] == 'true'
 
     @member = Member.find(params[:id])
@@ -102,7 +99,7 @@ class MembersController < ApplicationController
   def mail_member
 
     @from = Member.find(current_user.member.id)
-    @to = Member.find(params[:recipient_id])
+    @to   = Member.find(params[:recipient_id])
 
     Notifier.mail_message({
       :reply_addr => @from.user.email,
@@ -113,6 +110,17 @@ class MembersController < ApplicationController
     }).deliver
 
     redirect_to params[:origin]
+  end
+  
+  def view_as_user
+    if current_user.role == 'admin'
+      user = User.find(current_user.id)
+      user.toggle!(:view_as_user)
+    
+      render :text => 'toggled'
+    else
+      render :text => 'error'
+    end
   end
 end
 

@@ -1,17 +1,5 @@
 body
-  background: #e5f8a9 url(asset-path('bg_body_wide.jpg', image))
-  background-repeat: repeat-x
-  background-attachment: fixed
-  background-position: bottom
-
-#sky_bg
-  width: 100%
-  height: 130px
-  background: url(asset-path('bg_sky_2.png', image))
-  background-repeat: repeat-x
-  background-attachment: fixed
-  background-position: top
-  top: 0
+  background: url(asset-path('body_bg.png', image))
 
 h1
   font-family: Georgia, 'Palatino Linotype', Impact
@@ -44,16 +32,18 @@ table th
 .delete
   background: url(asset-path('cross.png', image)) left no-repeat
   padding-left: 20px
+  
 .loading
   margin: 25px auto 25px 240px
   width: 55px
   height: 55px
+  
 #top_bar
   position: relative
   z-index: 10000
   width: 100%
   height: 40px
-  background: url(asset-path('alpha_bg_60.png', image))
+  background: url(asset-path('alpha_bg_80.png', image))
   position: fixed
   top: 0
   -moz-box-shadow: 0px 0px 20px 3px #2f2f2f
@@ -76,7 +66,6 @@ table th
   background-color: #fff
   padding: 70px 10px 10px 10px
   width: 940px
-  margin-top: -130px
   min-height: 500px
 
 .clear
@@ -86,10 +75,12 @@ table th
 
 #login_box
   border: 1px solid #d4d4d4
-  margin-top: 10px
+  margin-top: -210px
   padding-top: 20px
   padding-bottom: 20px
   padding-left: 40px
+  position: fixed
+  top: 50%
   -moz-box-shadow: 0px 0px 20px 3px #111
   -webkit-box-shadow: 0px 0px 20px 3px #111
   -o-box-shadow: 0px 0px 20px 3px #111
@@ -111,7 +102,7 @@ table th
 
 .avatar
   float: left
-  width: 43px
+  width: 32px
   height: 32px
   padding: 2px
   background-color: #fff
@@ -160,11 +151,11 @@ ul.dropdown
 ul.main_menu
   padding: 0
   float: right
-  width: 720px
+  width: auto
   height: 40px
   overflow: hidden
   li
-    float: right
+    float: left
     margin-left: 0px
     list-style-type: none
     a
@@ -242,6 +233,10 @@ table
 #bottom_margin
   height: 30px
 
+a.drag
+  text-decoration: none
+  line-height: 16px
+  font-size: 22px
 #footer
   clear: both
   height: 30px

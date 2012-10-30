@@ -1,7 +1,5 @@
 class BlogController < ApplicationController
 
-  before_filter :is_logged, :load_conf
-
   # GET /blog
   # Show last recent blog posts                            HTML
   # -----------------------------------------------------------
